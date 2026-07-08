@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, ChevronRight, X, Printer, RefreshCw, MessageCircle, Mail, CheckCircle } from "lucide-react";
+import { Search, ChevronRight, X, Printer, RefreshCw, MessageCircle, Mail } from "lucide-react";
 import { cn } from "../lib/utils";
 import { formatRupiah, formatDate, formatTime } from "../lib/format";
 import Layout from "../components/Layout";
@@ -127,7 +127,7 @@ export default function RiwayatPage() {
   return matchSearch && matchPayment;
 });
 
-  async function handleRefund(id: number) {
+  async function handleRefund() {
     // await refundTransaction.mutateAsync({ id });
     // queryClient.invalidateQueries({ queryKey: getListTransactionsQueryKey() });
     setSelectedTxId(null);
@@ -263,7 +263,7 @@ export default function RiwayatPage() {
                   <Printer size={16} /> Cetak Ulang
                 </button>
                 <button
-                  onClick={() => handleRefund(selectedTx.id)}
+                  onClick={() => handleRefund()}
                   disabled={selectedTx.status === "Refund"}
                   className="border border-red-200 rounded-xl py-2.5 flex items-center justify-center gap-2 text-sm text-red-500 disabled:opacity-40"
                 >

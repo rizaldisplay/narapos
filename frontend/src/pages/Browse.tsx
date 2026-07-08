@@ -258,7 +258,7 @@ export default function Browse() {
         );
     };
 
-    const clearCart = () => setItems([]);
+    // const clearCart = () => setItems([]);
     const totalItems = items.reduce(
         (sum, item) => sum + item.quantity,
         0
@@ -269,13 +269,13 @@ export default function Browse() {
         0
     );
 
-    const createTransaction = {
-        isPending: false,
-        mutateAsync: async (data: unknown) => {
-            console.log("Dummy Transaction", data);
-            return Promise.resolve();
-        },
-    };
+    // const createTransaction = {
+    //     isPending: false,
+    //     mutateAsync: async (data: unknown) => {
+    //         console.log("Dummy Transaction", data);
+    //         return Promise.resolve();
+    //     },
+    // };
 
     const categories = [
         { id: 1, name: "Makanan" },
@@ -300,7 +300,7 @@ export default function Browse() {
 
     const change = Number(amountPaid.replace(/\D/g, "")) - 0;
 
-    function getCartQty(productId: number) {
+    function getCartQty(_id: number) {
         return 0;
     }
 
@@ -324,7 +324,6 @@ export default function Browse() {
     }
 
     async function handleConfirmPayment() {
-        const paid = Number(amountPaid.replace(/\D/g, "")) || totalPrice;
         setPaymentOpen(false);
         setPaymentSuccess(true);
         setTimeout(() => setPaymentSuccess(false), 3000);

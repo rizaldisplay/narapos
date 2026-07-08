@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
   X, ChevronRight, ChevronDown, LayoutDashboard, ShoppingCart, Package, Boxes,
-  Receipt, Users, BarChart2, Settings, LogOut, Store,
+  Receipt, Users, BarChart2, Settings, LogOut
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "../lib/utils";

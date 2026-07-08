@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Plus, Search, Filter, MoreHorizontal, Star, Download, Upload, ScanLine, Trash2, Edit, Package, AlertTriangle, X, Camera, ImagePlus } from "lucide-react";
+import { Plus, Search, Filter, MoreHorizontal, Download, Upload, ScanLine, Trash2, Edit, Package, AlertTriangle, X, Camera, ImagePlus } from "lucide-react";
 import { cn } from "../lib/utils";
 import { formatRupiah } from "../lib/format";
 // import { useListProducts, useListCategories, useGetProductStats, useDeleteProduct, useCreateProduct, useUpdateProduct, getListProductsQueryKey, getGetProductStatsQueryKey } from "@workspace/api-client-react";
@@ -216,7 +216,7 @@ export default function ProdukPage() {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [uploading, setUploading] = useState(false);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading] = useState(false);
 
     const categories = [
         { id: 1, name: "Makanan" },
@@ -245,7 +245,7 @@ export default function ProdukPage() {
     //   const createProduct = useCreateProduct();
     //   const updateProduct = useUpdateProduct();
 
-    async function handleDelete(id: number) {
+    async function handleDelete(_id: number) {
         // await deleteProduct.mutateAsync({ id });
         // queryClient.invalidateQueries({ queryKey: getListProductsQueryKey() });
         // queryClient.invalidateQueries({ queryKey: getGetProductStatsQueryKey() });
@@ -292,12 +292,6 @@ export default function ProdukPage() {
     }
 
     async function handleSubmit() {
-        const data = {
-            name: form.name, sku: form.sku, price: Number(form.price),
-            costPrice: Number(form.costPrice), stock: Number(form.stock),
-            categoryId: Number(form.categoryId), barcode: form.barcode,
-            isActive: form.isActive, imageUrl: form.imageUrl,
-        };
         if (editProduct) {
             //   await updateProduct.mutateAsync({ id: editProduct.id, data });
         } else {
