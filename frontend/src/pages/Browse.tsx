@@ -746,7 +746,7 @@ export default function Browse() {
 
                             if (
                                 barcode === lastBarcode.current &&
-                                now - lastScanTime.current < 1000
+                                now - lastScanTime.current < 500
                             ) {
                                 return;
                             }
@@ -771,7 +771,7 @@ export default function Browse() {
 
                             setTimeout(() => {
                                 setScanMessage("");
-                            },1500);
+                            },1000);
                         }}
                     />
 
