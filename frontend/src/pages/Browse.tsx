@@ -341,6 +341,11 @@ export default function Browse() {
         return `${m}:${s}`;
     };
 
+    const openScanner = () => {
+        scanned.current = false;
+        setScannerOpen(true);
+    };
+
     return (
         <Layout>
             {/* Header */}
@@ -381,7 +386,7 @@ export default function Browse() {
                         className="w-full bg-white rounded-xl py-3 pl-9 pr-12 text-sm text-gray-700 outline-none shadow-sm"
                     />
                     <button
-                        onClick={() => setScannerOpen(true)}
+                        onClick={() => openScanner}
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-primary"
                     >
                         <ScanLine size={18} />
