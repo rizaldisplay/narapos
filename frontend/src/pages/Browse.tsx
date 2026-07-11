@@ -1,5 +1,5 @@
 import { Search, Bell, Menu, ScanLine, Star, ShoppingCart, X, Plus, Minus, ChevronRight, CheckCircle } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import BarcodeScanner from "../components/BarcodeScanner";
 import { cn } from "../lib/utils";
 import { formatRupiah } from "../lib/format";
@@ -214,6 +214,7 @@ export default function Browse() {
     const [items, setItems] = useState<CartItem[]>([]);
     const lastBarcode = useRef("");
     const lastScanTime = useRef(0);
+    const [scanMessage, setScanMessage] = useState("");
 
     const addToCart = (product: Product) => {
         setItems((prev) => {
@@ -302,9 +303,13 @@ export default function Browse() {
 
     const change = Number(amountPaid.replace(/\D/g, "")) - 0;
 
-    function getCartQty(_id: number) {
-        return 0;
-    }
+        function getCartQty(id: number) {
+            const item = items.find(
+                item => item.product.id === id
+            );
+
+            return item?.quantity ?? 0;
+        }
 
     function openPayment() {
         setCartOpen(false);
@@ -346,6 +351,20 @@ export default function Browse() {
     const openScanner = () => {
         scanned.current = false;
         setScannerOpen(true);
+    };
+
+    const beepSound = useRef<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        beepSound.current = new Audio("/sounds/beep.mp3");
+        beepSound.current.preload = "auto";
+    }, []);
+
+    const playBeep = () => {
+        if (!beepSound.current) return;
+
+        beepSound.current.currentTime = 0;
+        beepSound.current.play().catch(() => {});
     };
 
     return (
@@ -727,7 +746,7 @@ export default function Browse() {
 
                             if (
                                 barcode === lastBarcode.current &&
-                                now - lastScanTime.current < 1000
+                                now - lastScanTime.current < 400
                             ) {
                                 return;
                             }
@@ -735,15 +754,24 @@ export default function Browse() {
                             lastBarcode.current = barcode;
                             lastScanTime.current = now;
 
-                            setSearch(barcode);
-
-                            const product = products.find(
-                                (p) => p.barcode === barcode
+                            const product = allProducts.find(
+                                p => p.barcode === barcode
                             );
 
-                            if (product) {
-                                addToCart(product);
+                            if (!product) {
+                                setScanMessage("❌ Barcode tidak ditemukan");
+                                return;
                             }
+
+                            playBeep();
+
+                            addToCart(product);
+                            setScanMessage(`✅ ${product.name} ditambahkan`);
+                            console.log(product)
+
+                            setTimeout(() => {
+                                setScanMessage("");
+                            },1500);
                         }}
                     />
 
@@ -801,14 +829,16 @@ export default function Browse() {
 
                                 {/* Laser */}
                                 <div className="absolute left-3 right-3 top-1/2 h-1 rounded-full bg-red-500 scanner-line shadow-[0_0_15px_red]" />
-
-
                             </div>
 
                         </div>
 
                         {/* Footer */}
                         <div className="pb-10 px-8 text-center text-white space-y-5">
+
+                             <p className="text-sm text-white/90">
+                                {scanMessage}
+                            </p>
 
                             <p className="text-sm text-white/90">
                                 Arahkan barcode ke dalam area pemindaian
@@ -828,6 +858,8 @@ export default function Browse() {
                                 </button>
 
                             </div>
+
+                           
 
                         </div>
 
