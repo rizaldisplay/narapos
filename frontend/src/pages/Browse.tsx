@@ -212,6 +212,8 @@ export default function Browse() {
     const [scannerOpen, setScannerOpen] = useState(false);
     const scanned = useRef(false);
     const [items, setItems] = useState<CartItem[]>([]);
+    const lastBarcode = useRef("");
+    const lastScanTime = useRef(0);
 
     const addToCart = (product: Product) => {
         setItems((prev) => {
@@ -721,14 +723,19 @@ export default function Browse() {
                     {/* Kamera */}
                     <BarcodeScanner
                         onScan={(barcode) => {
+                            const now = Date.now();
 
-                            if (scanned.current) return;
+                            if (
+                                barcode === lastBarcode.current &&
+                                now - lastScanTime.current < 1000
+                            ) {
+                                return;
+                            }
 
-                            scanned.current = true;
+                            lastBarcode.current = barcode;
+                            lastScanTime.current = now;
 
                             setSearch(barcode);
-
-                            setScannerOpen(false);
 
                             const product = products.find(
                                 (p) => p.barcode === barcode
