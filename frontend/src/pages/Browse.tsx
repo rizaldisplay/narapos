@@ -746,7 +746,7 @@ export default function Browse() {
 
                             if (
                                 barcode === lastBarcode.current &&
-                                now - lastScanTime.current < 400
+                                now - lastScanTime.current < 1000
                             ) {
                                 return;
                             }
