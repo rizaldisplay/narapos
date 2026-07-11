@@ -9,7 +9,7 @@ import {
   paymentStats,
   cashierData,
 } from "../mock/reportData";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from "recharts";
+import { XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell } from "recharts";
 import Layout from "../components/Layout";
 
 const PERIODS = [
@@ -66,7 +66,7 @@ export default function LaporanPage() {
     },
   ];
 
-  const paymentIconMap: Record<string, string> = { Tunai: "💵", QRIS: "📱", "Transfer Bank": "🏦", "Debit / EDC": "💳", "E-Wallet": "👛" };
+//   const paymentIconMap: Record<string, string> = { Tunai: "💵", QRIS: "📱", "Transfer Bank": "🏦", "Debit / EDC": "💳", "E-Wallet": "👛" };
 
   return (
     <Layout>
