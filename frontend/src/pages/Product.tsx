@@ -4,6 +4,7 @@ import { cn } from "../lib/utils";
 import { formatRupiah } from "../lib/format";
 // import { useListProducts, useListCategories, useGetProductStats, useDeleteProduct, useCreateProduct, useUpdateProduct, getListProductsQueryKey, getGetProductStatsQueryKey } from "@workspace/api-client-react";
 import Layout from "../components/Layout";
+import FilterButton from "../components/FilterButton";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -377,9 +378,7 @@ export default function ProdukPage() {
                             className="w-full border border-gray-200 rounded-xl py-2.5 pl-8 pr-3 text-sm outline-none focus:border-primary bg-white"
                         />
                     </div>
-                    <button className="border border-gray-200 rounded-xl px-3 py-2.5 flex items-center gap-1 bg-white text-sm text-gray-600">
-                        <Filter size={14} /> Filter
-                    </button>
+                     <FilterButton />
                 </div>
 
                 {/* Category chips */}
