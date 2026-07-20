@@ -163,7 +163,7 @@ const allProducts: Product[] = [
         isFavorite: true,
         isActive: true,
     },
-     {
+    {
         id: 10,
         barcode: "9998282882",
         name: "Good Day 3in1",
@@ -176,7 +176,7 @@ const allProducts: Product[] = [
         isFavorite: true,
         isActive: true,
     },
-     {
+    {
         id: 11,
         barcode: "9998282882",
         name: "Oreo Original",
@@ -303,13 +303,13 @@ export default function Browse() {
 
     const change = Number(amountPaid.replace(/\D/g, "")) - 0;
 
-        function getCartQty(id: number) {
-            const item = items.find(
-                item => item.product.id === id
-            );
+    function getCartQty(id: number) {
+        const item = items.find(
+            item => item.product.id === id
+        );
 
-            return item?.quantity ?? 0;
-        }
+        return item?.quantity ?? 0;
+    }
 
     function openPayment() {
         setCartOpen(false);
@@ -364,7 +364,7 @@ export default function Browse() {
         if (!beepSound.current) return;
 
         beepSound.current.currentTime = 0;
-        beepSound.current.play().catch(() => {});
+        beepSound.current.play().catch(() => { });
     };
 
     return (
@@ -771,7 +771,7 @@ export default function Browse() {
 
                             setTimeout(() => {
                                 setScanMessage("");
-                            },1000);
+                            }, 1000);
                         }}
                     />
 
@@ -834,7 +834,7 @@ export default function Browse() {
                         </div>
 
                         {/* Footer */}
-                        <div className="pb-10 px-8 text-center text-white space-y-5">
+                        {/* <div className="pb-10 px-8 text-center text-white space-y-5">
 
                              <p className="text-sm text-white/90">
                                 {scanMessage}
@@ -858,9 +858,100 @@ export default function Browse() {
                                 </button>
 
                             </div>
+                        </div> */}
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-black/40" onClick={() => setCartOpen(false)} />
+                            <div className="relative bg-white rounded-t-3xl max-h-[80vh] flex flex-col">
+                                <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-3 mb-4" />
+                                <div className="flex items-center justify-between px-4 pb-3 border-b">
+                                    <span className="font-bold text-gray-800">Keranjang</span>
+                                </div>
+                                <div className="flex-1 overflow-y-auto px-4 py-3">
+                                    {items.length === 0 ? (
+                                        <div className="h-full flex flex-col items-center justify-center text-center">
 
-                           
+                                            <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center">
+                                                <ShoppingCart
+                                                    size={40}
+                                                    className="text-gray-400"
+                                                    strokeWidth={1.5}
+                                                />
+                                            </div>
 
+                                            <h3 className="mt-5 text-lg font-semibold text-gray-700">
+                                                Keranjang Kosong
+                                            </h3>
+
+                                            <p className="mt-2 text-sm text-gray-400 max-w-xs">
+                                                Mulai scan barcode untuk menambahkan produk ke keranjang.
+                                            </p>
+
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-3">
+                                            {items.map((item) => (
+                                                <div
+                                                    key={item.product.id}
+                                                    className="flex items-center gap-3"
+                                                >
+                                                    <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden shrink-0">
+                                                        {item.product.imageUrl ? (
+                                                            <img
+                                                                src={item.product.imageUrl}
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        ) : (
+                                                            item.product.name[0]
+                                                        )}
+                                                    </div>
+
+                                                    <div className="flex-1">
+                                                        <div className="text-sm font-medium text-gray-800 truncate">
+                                                            {item.product.name}
+                                                        </div>
+                                                        <div className="text-primary text-sm font-bold">
+                                                            {formatRupiah(item.product.price)}
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="flex items-center gap-2">
+                                                        <button
+                                                            onClick={() =>
+                                                                updateQuantity(item.product.id, item.quantity - 1)
+                                                            }
+                                                            className="bg-gray-100 rounded-lg p-1"
+                                                        >
+                                                            <Minus size={14} />
+                                                        </button>
+
+                                                        <span className="text-sm font-bold w-6 text-center">
+                                                            {item.quantity}
+                                                        </span>
+
+                                                        <button
+                                                            onClick={() =>
+                                                                updateQuantity(item.product.id, item.quantity + 1)
+                                                            }
+                                                            className="bg-primary text-white rounded-lg p-1"
+                                                        >
+                                                            <Plus size={14} />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="px-4 pb-4 pt-3 border-t">
+                                    <div className="flex justify-between mb-4">
+                                        <span className="text-gray-600 font-medium">Total</span>
+                                        <span className="font-bold text-gray-800 text-lg">{formatRupiah(totalPrice)}</span>
+                                    </div>
+                                    <button onClick={openPayment} className="w-full bg-primary text-white font-semibold py-4 rounded-2xl text-sm">
+                                        Bayar Sekarang
+                                    </button>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

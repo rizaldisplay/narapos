@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "rootDir": "./",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "NodeNext",
+    "typeRoots": ["./src/types", "./node_modules/@types"]
+  },
+  "include": [
+    "server.ts",               // File utama Arslan
+    "src/**/*",                // Semua file di dalam folder src
+    "prisma/**/*"              // Jika ada file seed di prisma
+  ],
+  "exclude": ["node_modules", "dist", "logs"]
+}

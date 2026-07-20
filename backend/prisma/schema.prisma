@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cashier {
+  id            String @id @default(uuid())
+  name          String
+  username      String @unique
+  password_hash String
+
+  email String? @unique
+  phone String? @unique
+
+  shift    String
+  position String
+
+  avatar_url String?
+
+  is_active Boolean @default(true)
+
+  role_id String
+  role    Role   @relation(fields: [role_id], references: [id])
+
+  transactions Transaction[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("cashiers")
+}
+
+model Role {
+  id          String  @id @default(uuid())
+  name        String  @unique
+  description String?
+
+  cashiers    Cashier[]
+  permissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id     String @id @default(uuid())
+  module String
+  action String
+
+  roles RolePermission[]
+
+  @@unique([module, action])
+  @@map("permissions")
+}
+
+model RolePermission {
+  role_id       String
+  permission_id String
+
+  role       Role       @relation(fields: [role_id], references: [id])
+  permission Permission @relation(fields: [permission_id], references: [id])
+
+  @@id([role_id, permission_id])
+  @@map("role_permissions")
+}
+
+model Category {
+  id   String  @id @default(uuid())
+  name String
+  icon String?
+
+  products Product[]
+
+  created_at DateTime @default(now())
+
+  @@map("categories")
+}
+
+model Product {
+  id   String @id @default(uuid())
+  name String
+
+  sku     String  @unique
+  barcode String? @unique
+
+  price      Decimal @db.Decimal(12, 2)
+  cost_price Decimal @db.Decimal(12, 2)
+
+  stock Int
+
+  category_id String
+  category    Category @relation(fields: [category_id], references: [id])
+
+  image_url String?
+
+  is_active   Boolean @default(true)
+  is_favorite Boolean @default(false)
+  is_new      Boolean @default(false)
+
+  transaction_items TransactionItem[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Outlet {
+  id      String @id @default(uuid())
+  name    String
+  address String
+  city    String
+
+  phone    String? @unique
+  logo_url String?
+
+  last_sync_at DateTime?
+
+  created_at DateTime @default(now())
+
+  @@map("outlets")
+}
+
+model Transaction {
+  id String @id @default(uuid())
+
+  invoice_number String @unique
+
+  cashier_id String
+  cashier    Cashier @relation(fields: [cashier_id], references: [id])
+
+  total       Decimal @db.Decimal(12, 2)
+  amount_paid Decimal @db.Decimal(12, 2)
+  change      Decimal @db.Decimal(12, 2)
+
+  payment_method String
+  status         String
+
+  notes String?
+
+  items TransactionItem[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  @@map("transactions")
+}
+
+model TransactionItem {
+  id String @id @default(uuid())
+
+  transaction_id String
+  transaction    Transaction @relation(fields: [transaction_id], references: [id])
+
+  product_id String
+  product    Product @relation(fields: [product_id], references: [id])
+
+  product_name String
+
+  quantity Int
+
+  price    Decimal @db.Decimal(12, 2)
+  subtotal Decimal @db.Decimal(12, 2)
+
+  @@map("transaction_items")
+}
