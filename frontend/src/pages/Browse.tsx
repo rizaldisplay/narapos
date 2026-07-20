@@ -214,7 +214,7 @@ export default function Browse() {
     const [items, setItems] = useState<CartItem[]>([]);
     const lastBarcode = useRef("");
     const lastScanTime = useRef(0);
-    const [scanMessage, setScanMessage] = useState("");
+    // const [scanMessage, setScanMessage] = useState("");
 
     const addToCart = (product: Product) => {
         setItems((prev) => {
@@ -759,18 +759,18 @@ export default function Browse() {
                             );
 
                             if (!product) {
-                                setScanMessage("❌ Barcode tidak ditemukan");
+                                // setScanMessage("❌ Barcode tidak ditemukan");
                                 return;
                             }
 
                             playBeep();
 
                             addToCart(product);
-                            setScanMessage(`✅ ${product.name} ditambahkan`);
+                            // setScanMessage(`✅ ${product.name} ditambahkan`);
                             console.log(product)
 
                             setTimeout(() => {
-                                setScanMessage("");
+                                // setScanMessage("");
                             }, 1000);
                         }}
                     />
