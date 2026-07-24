@@ -208,7 +208,7 @@ export default function ProdukPage() {
     const [search, setSearch] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
     const [showForm, setShowForm] = useState(false);
-    const [editProduct, setEditProduct] = useState<any>(null);
+    const [editProduct, setEditProduct] = useState<unknown>(null);
     const [menuOpen, setMenuOpen] = useState<number | null>(null);
     const [form, setForm] = useState({
         name: "", sku: "", price: "", costPrice: "", stock: "",
@@ -246,6 +246,7 @@ export default function ProdukPage() {
     //   const createProduct = useCreateProduct();
     //   const updateProduct = useUpdateProduct();
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     async function handleDelete(_id: number) {
         // await deleteProduct.mutateAsync({ id });
         // queryClient.invalidateQueries({ queryKey: getListProductsQueryKey() });
@@ -260,6 +261,7 @@ export default function ProdukPage() {
         setShowForm(true);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function openEdit(product: any) {
         setForm({ name: product.name, sku: product.sku ?? "", price: String(product.price), costPrice: String(product.costPrice), stock: String(product.stock), categoryId: String(product.categoryId), barcode: product.barcode ?? "", isActive: product.isActive, imageUrl: product.imageUrl ?? null });
         setImagePreview(product.imageUrl ?? null);
@@ -445,7 +447,7 @@ export default function ProdukPage() {
             </div>
 
             {/* Bottom actions */}
-            <div className="fixed bottom-16 left-0 right-0 mx-auto max-w-[430px] bg-white border-t border-gray-100 px-4 py-3 flex gap-2">
+            <div className="fixed bottom-16 left-0 right-0 mx-auto max-w-107.5 bg-white border-t border-gray-100 px-4 py-3 flex gap-2">
                 <button className="flex-1 border border-gray-200 rounded-xl py-2.5 flex items-center justify-center gap-1.5 text-xs font-medium text-gray-600">
                     <Download size={14} /> Import Excel
                 </button>
@@ -546,6 +548,7 @@ export default function ProdukPage() {
                                         type={f.type || "text"}
                                         inputMode={f.type === "number" ? "numeric" : undefined}
                                         placeholder={f.placeholder}
+                                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
                                         value={(form as any)[f.key]}
                                         onChange={(e) => setForm((prev) => ({ ...prev, [f.key]: e.target.value }))}
                                         className="w-full border border-gray-200 rounded-xl py-3 px-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary/20"
