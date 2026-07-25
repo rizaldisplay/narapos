@@ -29,16 +29,17 @@ function App() {
           <MobileLayout>
             <PageTransition keyName="">
               <Routes>
-                <Route path="/" element={<Browse />} />
+                <Route path="/" element={<Splash />} />
+                <Route path="/login" element={<Login/>} />
+                <Route path="/register" element={<Register/>} />
+                <Route path="/otp" element={<OTP/>} />
+                <Route path="/welcome" element={<Welcome/>} />
+
+                <Route path="/dashboard" element={<Browse />} />
                 <Route path="/produk" element={<ProdukPage />} />
                 <Route path="/riwayat" element={<RiwayatPage />} />
                 <Route path="/laporan" element={<LaporanPage />} />
                 <Route path="/akun" element={<AkunPage />} />
-                <Route path="/splash" element={<Splash />} />
-                <Route path="/login" element={<Login/>} />
-                <Route path="/otp" element={<OTP/>} />
-                <Route path="/register" element={<Register/>} />
-                <Route path="/welcome" element={<Welcome/>} />
 
                 <Route path="/setup" element={<Setup/>} />
                 <Route path="/success" element={<Success/>} />

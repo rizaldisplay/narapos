@@ -24,6 +24,9 @@ model Cashier {
 
   is_active Boolean @default(true)
 
+  otp     String?
+  otpExpires DateTime?
+
   role_id String
   role    Role   @relation(fields: [role_id], references: [id])
 
